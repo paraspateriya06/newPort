@@ -15,30 +15,36 @@ const SoundControl = () => {
     const audioRef = useRef(null);
 
     useEffect(() => {
-        // Initialize Audio object - pointing to local public file
-        // INSTRUCTION: Download "Interstellar Theme" and save it as "interstellar.mp3" in the public/ folder
+        // Initialize Audio object
         const audio = new Audio('/interstellar.mp3');
         audio.loop = true;
         audio.volume = 0.5;
         
         // Add event listeners
-        const setReady = () => setIsLoading(false);
+        // 'canplay' fires much earlier than 'canplaythrough' (which waits for full buffer)
+        const setReady = () => {
+             console.log("Audio ready to play");
+             setIsLoading(false);
+        };
         const handleError = (e) => {
             console.error("Audio Load Error:", e);
+            // Even if error, unlock button so user can try clicking to see what happens
             setIsLoading(false); 
         };
 
-        audio.addEventListener('canplaythrough', setReady);
+        audio.addEventListener('canplay', setReady);
+        audio.addEventListener('loadedmetadata', setReady); // Fallback to enable sooner
         audio.addEventListener('error', handleError);
         
         // In case it loads instantly from cache
-        if (audio.readyState >= 3) setIsLoading(false);
+        if (audio.readyState >= 1) setIsLoading(false);
 
         audioRef.current = audio;
 
         return () => {
              audio.pause();
-             audio.removeEventListener('canplaythrough', setReady);
+             audio.removeEventListener('canplay', setReady);
+             audio.removeEventListener('loadedmetadata', setReady);
              audio.removeEventListener('error', handleError);
         };
     }, []);
