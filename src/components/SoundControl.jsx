@@ -3,67 +3,51 @@ import { FaPlay, FaPause, FaSpinner } from 'react-icons/fa';
 
 const SoundControl = () => {
     const [isPlaying, setIsPlaying] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    // Reliable static placeholder URL for "Ambient Piano" music
-    // Using a direct mp3 link that allows CORS and hotlinking
-    const audioUrl = 'https://assets.mixkit.co/music/preview/mixkit-slow-trail-71.mp3'; 
-    // Alternate: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3' (upbeat)
-    // We want Hans Zimmer style. Let's try:
-    // 'https://assets.mixkit.co/music/preview/mixkit-slow-trail-71.mp3' (Cinematic)
-    
-    // We will use a ref to hold the audio instance
+    const [isLoading, setIsLoading] = useState(false); // No loading initially
     const audioRef = useRef(null);
 
+    // Cleanup on unmount
     useEffect(() => {
-        // Initialize Audio object
-        const audio = new Audio('/interstellar.mp3');
-        audio.loop = true;
-        audio.volume = 0.5;
-        
-        // Add event listeners
-        // 'canplay' fires much earlier than 'canplaythrough' (which waits for full buffer)
-        const setReady = () => {
-             console.log("Audio ready to play");
-             setIsLoading(false);
-        };
-        const handleError = (e) => {
-            console.error("Audio Load Error:", e);
-            // Even if error, unlock button so user can try clicking to see what happens
-            setIsLoading(false); 
-        };
-
-        audio.addEventListener('canplay', setReady);
-        audio.addEventListener('loadedmetadata', setReady); // Fallback to enable sooner
-        audio.addEventListener('error', handleError);
-        
-        // In case it loads instantly from cache
-        if (audio.readyState >= 1) setIsLoading(false);
-
-        audioRef.current = audio;
-
         return () => {
-             audio.pause();
-             audio.removeEventListener('canplay', setReady);
-             audio.removeEventListener('loadedmetadata', setReady);
-             audio.removeEventListener('error', handleError);
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current = null;
+            }
         };
     }, []);
 
     const togglePlay = async () => {
-        if (!audioRef.current) return;
-
-        if (isPlaying) {
-            audioRef.current.pause();
-            setIsPlaying(false);
-        } else {
+        // Lazy load: Initialize audio ONLY on the first user interaction (Mobile requirement)
+        if (!audioRef.current) {
+            setIsLoading(true);
             try {
-                // Browsers require user interaction before playing audio. 
-                // This function is triggered by a click, so it should pass.
-                await audioRef.current.play();
+                const audio = new Audio('/interstellar.mp3');
+                audio.loop = true;
+                audio.volume = 0.5;
+                
+                // Wait for it to be actually playable
+                await audio.play();
+                
+                audioRef.current = audio;
                 setIsPlaying(true);
             } catch (error) {
-                console.error("Play failed:", error);
-                // Maybe show a UI error state or retry
+                console.error("Playback failed (likely mobile restriction or network):", error);
+                alert("Audio could not play. Please interact with the page or check your connection.");
+            } finally {
+                setIsLoading(false);
+            }
+        } else {
+            // Standard toggle
+            if (isPlaying) {
+                audioRef.current.pause();
+                setIsPlaying(false);
+            } else {
+                try {
+                    await audioRef.current.play();
+                    setIsPlaying(true);
+                } catch (err) {
+                    console.error("Resume failed:", err);
+                }
             }
         }
     };
