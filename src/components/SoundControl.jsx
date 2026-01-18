@@ -21,7 +21,9 @@ const SoundControl = () => {
         if (!audioRef.current) {
             setIsLoading(true);
             try {
-                const audio = new Audio('/interstellar.mp3');
+                // User has optimized the file size. Switching back to local file.
+                const audio = new Audio('/interstellar.mp3'); 
+                
                 audio.loop = true;
                 audio.volume = 0.5;
                 
