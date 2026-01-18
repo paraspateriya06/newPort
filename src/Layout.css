@@ -143,3 +143,15 @@
         grid-column: span 12;
     }
 }
+
+@media (max-width: 768px) {
+    .section-card-wrapper {
+        padding: 2rem 1.5rem;
+        border-radius: 1rem;
+    }
+
+    .bento-grid {
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+}
