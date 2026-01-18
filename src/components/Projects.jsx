@@ -9,7 +9,7 @@ const projects = [
     subtitle: 'AI Blogging Application',
     tech: ['React', 'Express', 'Node.js', 'MongoDB', 'Gemini API'],
     description: 'A full-stack blogging platform integrated with Gemini AI. Features user authentication (JWT), role-based access, and interactive state management.',
-    github: 'https://github.com/paraspaterya', // Placeholder
+    github: 'https://github.com/paraspateriya06/QuickBlogMERN', // Placeholder
     demo: '#'
   },
   {
@@ -17,7 +17,7 @@ const projects = [
     subtitle: 'Problem-Focused Yoga Guidance',
     tech: ['React', 'Firebase', 'Node.js', 'Express', 'Tailwind'],
     description: 'Wellness platform offering personalized yoga plans. Implements secure Firebase authentication and real-time cloud data synchronization.',
-    github: 'https://github.com/paraspaterya',
+    github: 'https://github.com/paraspateriya06/HealthYoga',
     demo: '#'
   },
   {
@@ -25,7 +25,7 @@ const projects = [
     subtitle: 'Library Book Management',
     tech: ['React', 'Express', 'Node.js', 'MongoDB'],
     description: 'Comprehensive bookstore management system with full CRUD operations for inventory, utilizing clean RESTful architecture.',
-    github: 'https://github.com/paraspaterya',
+    github: 'https://github.com/paraspateriya06/BookStoreMernApp',
     demo: '#'
   }
 ];

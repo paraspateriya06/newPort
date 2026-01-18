@@ -31,9 +31,9 @@ const ConnectGlobe = () => {
             <h2 className="section-title">Let's Connect Globally</h2>
             
             <div className="social-links-row" style={{display: 'flex', gap: '2rem', marginTop: '1rem'}}>
-                <a href="https://twitter.com/paraspaterya" className="social-btn"><FaTwitter size={24} /></a>
-                <a href="https://github.com/paraspaterya" className="social-btn"><FaGithub size={24} /></a>
-                <a href="https://linkedin.com" className="social-btn"><FaLinkedin size={24} /></a>
+                <a href="https://x.com/Paras_Paterya06" className="social-btn"><FaTwitter size={24} /></a>
+                <a href="https://github.com/paraspateriya06" className="social-btn"><FaGithub size={24} /></a>
+                <a href="https://www.linkedin.com/in/parasmpaterya06/" className="social-btn"><FaLinkedin size={24} /></a>
                 <a href="mailto:paraspaterya616@gmail.com" className="social-btn"><FaEnvelope size={24} /></a>
             </div>
             

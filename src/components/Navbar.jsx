@@ -45,13 +45,13 @@ const Navbar = () => {
 
             <div className="desktop-only" style={{display: 'flex', gap: '1.5rem', alignItems: 'center'}}>
                 <div className="social-links" style={{display: 'flex', gap: '1rem'}}>
-                    <a href="https://github.com/paraspaterya" target="_blank" rel="noopener noreferrer" className="social-icon">
+                    <a href="https://github.com/paraspateriya06" target="_blank" rel="noopener noreferrer" className="social-icon">
                         <FaGithub size={20} />
                     </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                    <a href="https://www.linkedin.com/in/parasmpaterya06/" target="_blank" rel="noopener noreferrer" className="social-icon">
                         <FaLinkedin size={20} />
                     </a>
-                    <a href="https://leetcode.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                    <a href="https://leetcode.com/u/paraspaterya06/" target="_blank" rel="noopener noreferrer" className="social-icon">
                         <SiLeetcode size={20} />
                     </a>
                 </div>
@@ -87,9 +87,9 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <div className="mobile-socials">
-                        <a href="https://github.com/paraspaterya" target="_blank" rel="noopener noreferrer"><FaGithub size={24} /></a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><FaLinkedin size={24} /></a>
-                        <a href="https://leetcode.com" target="_blank" rel="noopener noreferrer"><SiLeetcode size={24} /></a>
+                        <a href="https://github.com/paraspateriya06" target="_blank" rel="noopener noreferrer"><FaGithub size={24} /></a>
+                        <a href="https://www.linkedin.com/in/parasmpaterya06/" target="_blank" rel="noopener noreferrer"><FaLinkedin size={24} /></a>
+                        <a href="https://leetcode.com/u/paraspaterya06/" target="_blank" rel="noopener noreferrer"><SiLeetcode size={24} /></a>
                     </div>
                 </motion.div>
             )}
