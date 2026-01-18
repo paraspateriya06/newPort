@@ -6,7 +6,7 @@ const SoundControl = () => {
     const [isLoading, setIsLoading] = useState(true);
     // Reliable static placeholder URL for "Ambient Piano" music
     // Using a direct mp3 link that allows CORS and hotlinking
-    const audioUrl = 'https://assets.mixkit.co/music/preview/mixkit-ethereal-fairy-win-638.mp3'; 
+    const audioUrl = 'https://assets.mixkit.co/music/preview/mixkit-slow-trail-71.mp3'; 
     // Alternate: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3' (upbeat)
     // We want Hans Zimmer style. Let's try:
     // 'https://assets.mixkit.co/music/preview/mixkit-slow-trail-71.mp3' (Cinematic)
@@ -15,8 +15,9 @@ const SoundControl = () => {
     const audioRef = useRef(null);
 
     useEffect(() => {
-        // Initialize Audio object only once
-        const audio = new Audio('https://assets.mixkit.co/music/preview/mixkit-cinematic-mystery-trailer-690.mp3');
+        // Initialize Audio object - pointing to local public file
+        // INSTRUCTION: Download "Interstellar Theme" and save it as "interstellar.mp3" in the public/ folder
+        const audio = new Audio('/interstellar.mp3');
         audio.loop = true;
         audio.volume = 0.5;
         
