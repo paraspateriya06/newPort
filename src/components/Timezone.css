@@ -1,0 +1,117 @@
+.globe-container {
+    width: 100px;
+    height: 100px;
+    perspective: 400px;
+    margin: 0 auto;
+}
+
+.globe {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), #1e293b);
+    box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, 0.5),
+        0 0 15px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    animation: float 6s ease-in-out infinite;
+}
+
+.globe-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    border-radius: 50%;
+    animation: rotateGlobe 20s linear infinite;
+    opacity: 0.3;
+}
+
+/* Gray/Monochrome styling as requested */
+.globe.gray-theme {
+    background: radial-gradient(circle at 30% 30%, #94a3b8, #0f172a);
+    box-shadow: inset 0 0 30px #020617;
+}
+
+@keyframes rotateGlobe {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.timezone-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 2.5rem;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    justify-content: center;
+}
+
+.time-display {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.05em;
+    color: var(--text-color);
+}
+
+.location-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.availability-status {
+    position: relative;
+    padding-left: 1rem;
+    color: #4ade80;
+    /* Green */
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.availability-status::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: currentColor;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+}
