@@ -18,12 +18,12 @@ const Hero = () => {
             Paras Mani <br />
             <span className="name-highlight">Paterya</span>
           </h1>
-          <h2 style={{fontSize: '2rem', marginBottom: '1rem', color: '#e2e8f0'}}>
-              I'm <span style={{color: '#4ade80'}}>The Developer</span>. <br/>
-              I'm <span style={{color: '#f472b6'}}>An Engineer</span>.
+          <h2 style={{fontSize: '2rem', marginBottom: '1rem', color: '#cbd5e1'}}>
+              I'm <span style={{color: '#2dd4bf'}}>The Developer</span>. <br/>
+              I'm <span style={{color: '#94a3b8'}}>An Engineer</span>.
           </h2>
           <p className="hero-description">
-            I turn complex ideas into <strong style={{color: 'white'}}>effortless experiences</strong>. 
+            I turn complex ideas into <strong style={{color: '#f1f5f9'}}>effortless experiences</strong>. 
             Backend Specialist building with purpose.
           </p>
           

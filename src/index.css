@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-color: #030712;
-  /* Very dark blue/black */
-  --text-color: #f1f5f9;
+  --bg-color: #0b1120;
+  /* Deep Navy/Black */
+  --text-color: #ffffff;
+  /* Pure White for pop */
   --text-secondary: #94a3b8;
-  --primary-accent: #8b5cf6;
-  /* Violet */
-  --secondary-accent: #ec4899;
-  /* Pink */
-  --glass-bg: rgba(30, 41, 59, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --primary-accent: #22d3ee;
+  /* Cyan 400 - Vibrant */
+  --secondary-accent: #818cf8;
+  /* Indigo 400 */
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(148, 163, 184, 0.15);
   --font-main: 'Outfit', sans-serif;
 }
 
@@ -22,14 +23,17 @@
 
 body {
   font-family: var(--font-main);
-  background-color: var(--bg-color);
+  background-color: #020617;
   color: var(--text-color);
   overflow-x: hidden;
   line-height: 1.6;
   background-image:
-    radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.15) 0%, transparent 25%);
+    radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.18) 0%, transparent 45%),
+    linear-gradient(to bottom, #020617 0%, #0f172a 100%);
   background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 a {
@@ -58,6 +62,7 @@ button {
   background: linear-gradient(to right, var(--text-color), var(--text-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Glass Card Utility */

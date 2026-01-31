@@ -4,11 +4,12 @@
     border-radius: 1.5rem;
     overflow: hidden;
     padding: 3rem 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(20px);
+    border: 1px solid rgba(148, 163, 184, 0.05);
+    /* Slate border */
+    background: rgba(2, 6, 23, 0.4);
+    /* Near black, barely visible */
+    backdrop-filter: blur(12px);
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* Bouncy spring-like */
     z-index: 1;
 }
 
@@ -18,96 +19,69 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    opacity: 0.4;
+    opacity: 0.3;
     transition: opacity 0.5s ease;
 }
 
 .section-card-wrapper:hover {
-    transform: translateY(-8px) scale(1.01);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px rgba(2, 6, 23, 0.8);
+    border-color: rgba(148, 163, 184, 0.1);
     z-index: 10;
 }
 
 .section-card-wrapper:hover::before {
-    opacity: 0.7;
+    opacity: 0.5;
 }
 
-/* --- THEME 1: VIOLET (Nebula/Cosmic) --- */
+/* --- THEME 1: INDIGO (Deep) --- */
 .theme-violet {
-    border-color: rgba(139, 92, 246, 0.3);
+    border-color: rgba(99, 102, 241, 0.15);
+    /* Indigo */
 }
 
 .theme-violet::before {
     background:
-        radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.2), transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.2), transparent 50%);
-    animation: pulseNebula 8s infinite alternate;
+        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.08), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(30, 58, 138, 0.08), transparent 60%);
 }
 
-/* --- THEME 2: BLUE (Cyber/Matrix) --- */
+/* --- THEME 2: BLUE (Slate Blue) --- */
 .theme-blue {
-    border-color: rgba(56, 189, 248, 0.3);
+    border-color: rgba(56, 189, 248, 0.15);
 }
 
 .theme-blue::before {
-    background-image:
-        linear-gradient(0deg, transparent 24%, rgba(56, 189, 248, 0.05) 25%, rgba(56, 189, 248, 0.05) 26%, transparent 27%, transparent 74%, rgba(56, 189, 248, 0.05) 75%, rgba(56, 189, 248, 0.05) 76%, transparent 77%, transparent),
-        linear-gradient(90deg, transparent 24%, rgba(56, 189, 248, 0.05) 25%, rgba(56, 189, 248, 0.05) 26%, transparent 27%, transparent 74%, rgba(56, 189, 248, 0.05) 75%, rgba(56, 189, 248, 0.05) 76%, transparent 77%, transparent);
-    background-size: 50px 50px;
-    background-position: 0 0;
-    animation: moveGrid 20s linear infinite;
+    background:
+        linear-gradient(180deg, rgba(56, 189, 248, 0.03) 0%, transparent 100%);
 }
 
-/* --- THEME 3: GREEN (Organic/Portal) --- */
+/* --- THEME 3: TEAL (Subtle) --- */
 .theme-green {
-    border-color: rgba(74, 222, 128, 0.3);
+    border-color: rgba(20, 184, 166, 0.15);
 }
 
 .theme-green::before {
-    background: radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.1), transparent 70%);
-    /* We could add a scanning line or ripple here */
+    background: radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.05), transparent 70%);
 }
 
-/* --- THEME 4: ORANGE (Solar/Energy) --- */
+/* --- THEME 4: SLATE (Neutral) --- */
 .theme-orange {
-    border-color: rgba(251, 146, 60, 0.3);
+    border-color: rgba(148, 163, 184, 0.15);
 }
 
 .theme-orange::before {
-    background: conic-gradient(from 0deg at 50% 50%, rgba(251, 146, 60, 0.05), transparent 60%);
-    animation: rotateSolar 10s linear infinite;
+    background: radial-gradient(circle at 50% 0%, rgba(148, 163, 184, 0.05), transparent 60%);
 }
 
-/* Animations */
+/* Animations (Simplified) */
 @keyframes pulseNebula {
     0% {
-        transform: scale(1);
-        opacity: 0.4;
+        opacity: 0.3;
     }
 
     100% {
-        transform: scale(1.1);
-        opacity: 0.6;
-    }
-}
-
-@keyframes moveGrid {
-    0% {
-        background-position: 0 0;
-    }
-
-    100% {
-        background-position: 50px 50px;
-    }
-}
-
-@keyframes rotateSolar {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
+        opacity: 0.5;
     }
 }
 

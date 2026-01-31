@@ -27,7 +27,7 @@
     background: rgba(30, 41, 59, 0.6);
     border-color: var(--primary-accent);
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 10px 30px -10px rgba(34, 211, 238, 0.15);
 }
 
 .skill-icon {

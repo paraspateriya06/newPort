@@ -97,8 +97,8 @@
 .availability-status {
     position: relative;
     padding-left: 1rem;
-    color: #4ade80;
-    /* Green */
+    color: var(--primary-accent);
+    /* Active Status */
     font-weight: 500;
     font-size: 0.9rem;
 }

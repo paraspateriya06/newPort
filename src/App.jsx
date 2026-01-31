@@ -134,7 +134,7 @@ function App() {
         borderTop: '1px solid var(--glass-border)',
         marginTop: '2rem'
       }}>
-        <p>© {new Date().getFullYear()} Paras Mani Paterya. Built with Code & Magic.</p>
+        <p>© {new Date().getFullYear()} Paras Mani Paterya</p>
       </footer>
     </div>
   );
