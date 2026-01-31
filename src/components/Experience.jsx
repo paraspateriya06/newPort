@@ -5,7 +5,7 @@ import './Experience.css';
 
 const experiences = [
   {
-    role: 'Backend Developer Intern – SaaS Platform',
+    role: 'Backend Developer Internship',
     company: 'PAXTRADE GLOBAL PVT. LTD (Squar FT)',
     period: 'Jan 2026 - Present',
     description: [
