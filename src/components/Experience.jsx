@@ -5,13 +5,17 @@ import './Experience.css';
 
 const experiences = [
   {
-    role: 'Backend Developer Internship',
-    company: 'Minimal Hollc',
-    period: 'May 2025 - July 2025',
+    role: 'Backend Developer Intern – SaaS Platform',
+    company: 'PAXTRADE GLOBAL PVT. LTD (Squar FT)',
+    period: 'Jan 2026 - Present',
     description: [
-      'Technologies Used: Java, SQL, REST APIs, Git, Nodejs, Express js, Axios.',
-      'Designed and implemented REST APIs using Node Js , Express Js and SQL with role based access control and secure authentication.',
-      'Collaborated in an agile, multi-developer environment with code reviews, version control, and CI/CD workflows.'
+      'Working as a Backend Developer on a MERN-based SaaS platform for PG and property owners to manage tenants, wardens, and hostel operations.',
+      'Designed and developed RESTful APIs using Node.js and Express.js for hostel patrol management, warden cleaning services, and tenant workflows.',
+      'Built dashboard APIs to generate hostel cleaning alerts and operational insights for property owners and wardens.',
+      'Implemented APIs to edit property owner details, update property names, and manage property configurations.',
+      'Designed database schemas and wrote Prisma ORM queries for PostgreSQL, ensuring efficient relational data modeling and optimized query performance.',
+      'Implemented role-based access control (Property Owner, Warden, Tenant) and secure authentication for backend services.',
+      'Collaborated in an agile, multi-developer environment using Git, code reviews, and CI/CD workflows to deliver scalable, production-ready backend systems.'
     ]
   }
 ];
