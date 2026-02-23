@@ -13,6 +13,7 @@ import Workflow from './components/sections/Workflow';
 import ConnectGlobe from './components/sections/ConnectGlobe';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import './Layout.css';
+import Background3D from './components/Background3D';
 
 // Wrapper for themed sections
 const SectionCard = ({ children, className, theme = "default", id, delay = 0 }) => (
@@ -37,7 +38,8 @@ function App() {
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <div className="App">
+    <div className="App" style={{ position: 'relative', overflowX: 'hidden' }}>
+       <Background3D />
        {/* Scroll Progress Bar */}
       <motion.div
         style={{
