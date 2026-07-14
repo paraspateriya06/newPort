@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import './ConnectGlobe.css';
@@ -8,10 +8,39 @@ const XIcon = () => (
 );
 
 const ConnectGlobe = () => {
+    const globeRef = useRef(null);
+
+    const handlePointerMove = (event) => {
+        const globe = globeRef.current;
+        if (!globe) return;
+
+        const rect = globe.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+        globe.style.setProperty('--globe-tilt-x', `${(-y * 11).toFixed(2)}deg`);
+        globe.style.setProperty('--globe-tilt-y', `${(x * 14).toFixed(2)}deg`);
+        globe.style.setProperty('--globe-light-x', `${(32 + x * 18).toFixed(2)}%`);
+        globe.style.setProperty('--globe-light-y', `${(28 + y * 16).toFixed(2)}%`);
+    };
+
+    const handlePointerLeave = () => {
+        const globe = globeRef.current;
+        if (!globe) return;
+
+        globe.style.setProperty('--globe-tilt-x', '0deg');
+        globe.style.setProperty('--globe-tilt-y', '0deg');
+        globe.style.setProperty('--globe-light-x', '32%');
+        globe.style.setProperty('--globe-light-y', '28%');
+    };
+
     return (
         <div className="connect-globe-section">
             <motion.div
+                ref={globeRef}
                 className="globe-stage"
+                onPointerMove={handlePointerMove}
+                onPointerLeave={handlePointerLeave}
                 initial={{ opacity: 0, scale: 0.92, y: 22 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}

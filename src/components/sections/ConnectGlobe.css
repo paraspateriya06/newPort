@@ -9,6 +9,10 @@
 }
 
 .globe-stage {
+    --globe-tilt-x: 0deg;
+    --globe-tilt-y: 0deg;
+    --globe-light-x: 32%;
+    --globe-light-y: 28%;
     width: clamp(220px, 28vw, 330px);
     aspect-ratio: 1;
     position: relative;
@@ -17,6 +21,7 @@
     margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
     perspective: 900px;
     transform-style: preserve-3d;
+    cursor: crosshair;
 }
 
 .globe-stage::before {
@@ -58,7 +63,7 @@
     position: relative;
     overflow: hidden;
     background:
-        radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.7), rgba(190, 190, 190, 0.22) 16%, transparent 27%),
+        radial-gradient(circle at var(--globe-light-x) var(--globe-light-y), rgba(255, 255, 255, 0.74), rgba(190, 190, 190, 0.24) 16%, transparent 27%),
         radial-gradient(circle at 65% 70%, rgba(255, 255, 255, 0.14), transparent 34%),
         radial-gradient(circle at 45% 52%, rgba(255, 255, 255, 0.08), transparent 44%),
         linear-gradient(145deg, #303033 0%, #101011 48%, #020202 100%);
@@ -68,9 +73,12 @@
         inset 12px 12px 34px rgba(255, 255, 255, 0.08),
         0 34px 80px rgba(0, 0, 0, 0.54),
         0 0 42px rgba(255, 255, 255, 0.08);
-    animation: globeFloat 7s ease-in-out infinite;
+    animation: globeConstantRotate 18s linear infinite;
     transform-style: preserve-3d;
     will-change: transform;
+    transition:
+        background 0.75s var(--ease-smooth),
+        box-shadow 0.75s var(--ease-smooth);
 }
 
 .globe-shell::before,
@@ -100,7 +108,7 @@
     inset: 0;
     border-radius: inherit;
     background:
-        radial-gradient(circle at 32% 28%, transparent 0%, transparent 30%, rgba(0, 0, 0, 0.1) 52%, rgba(0, 0, 0, 0.78) 100%),
+        radial-gradient(circle at var(--globe-light-x) var(--globe-light-y), transparent 0%, transparent 30%, rgba(0, 0, 0, 0.1) 52%, rgba(0, 0, 0, 0.78) 100%),
         linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 34%, rgba(0, 0, 0, 0.7));
     z-index: 5;
     pointer-events: none;
@@ -115,7 +123,7 @@
         repeating-linear-gradient(90deg, transparent 0 24px, rgba(255, 255, 255, 0.1) 25px, transparent 26px);
     opacity: 0.34;
     transform: skewX(-8deg) rotateY(12deg);
-    animation: globeGridDrift 32s linear infinite;
+    animation: globeGridDrift 18s linear infinite;
     z-index: 3;
     mix-blend-mode: screen;
 }
@@ -143,7 +151,7 @@
     opacity: 0.36;
     filter: invert(1) grayscale(1) contrast(1.55) brightness(1.15);
     mix-blend-mode: screen;
-    animation: globeMapSpin 30s linear infinite;
+    animation: globeMapSpin 18s linear infinite;
     transform: rotateY(0deg) translateZ(1px);
     z-index: 2;
     will-change: background-position;
@@ -200,14 +208,29 @@
     letter-spacing: 0;
 }
 
-@keyframes globeFloat {
-    0%,
-    100% {
-        transform: translateY(0) rotateX(0deg) rotateZ(-1deg);
+@keyframes globeConstantRotate {
+    0% {
+        transform:
+            translateY(0)
+            rotateX(var(--globe-tilt-x))
+            rotateY(var(--globe-tilt-y))
+            rotateZ(-1deg);
     }
 
     50% {
-        transform: translateY(-10px) rotateX(2deg) rotateZ(1deg);
+        transform:
+            translateY(-8px)
+            rotateX(calc(var(--globe-tilt-x) + 1deg))
+            rotateY(calc(var(--globe-tilt-y) + 180deg))
+            rotateZ(1deg);
+    }
+
+    100% {
+        transform:
+            translateY(0)
+            rotateX(var(--globe-tilt-x))
+            rotateY(calc(var(--globe-tilt-y) + 360deg))
+            rotateZ(-1deg);
     }
 }
 
