@@ -4,7 +4,7 @@
 
 .timeline {
     position: relative;
-    max-width: 800px;
+    max-width: 860px;
     margin: 0 auto;
 }
 
@@ -15,8 +15,8 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(to bottom, var(--primary-accent), var(--secondary-accent));
-    opacity: 0.3;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.08));
+    opacity: 0.55;
 }
 
 .timeline-item {
@@ -33,8 +33,8 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--primary-accent);
-    box-shadow: 0 0 10px var(--primary-accent);
+    background: #f1f1f1;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.34);
 }
 
 .timeline-content {
@@ -63,11 +63,12 @@
 }
 
 .job-period {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.055);
     padding: 0.4rem 1rem;
     border-radius: 2rem;
     font-size: 0.85rem;
     color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .job-details {
@@ -82,17 +83,20 @@
 }
 
 .job-details li::before {
-    content: '▹';
+    content: '';
     position: absolute;
     left: 0;
-    color: var(--primary-accent);
+    top: 0.7rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-accent);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
 @media (max-width: 768px) {
     .timeline::before {
-        left: -10px;
         display: none;
-        /* Hide line on small screens if simpler layout preferred, or adjust */
     }
 
     .timeline-item {

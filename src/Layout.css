@@ -1,91 +1,86 @@
-/* Base Card - Enhanced for "Dimensions" */
 .section-card-wrapper {
     position: relative;
-    border-radius: 1.5rem;
+    border-radius: 1rem;
     overflow: hidden;
     padding: 3rem 2rem;
-    border: 1px solid rgba(148, 163, 184, 0.05);
-    /* Slate border */
-    background: rgba(2, 6, 23, 0.4);
-    /* Near black, barely visible */
-    backdrop-filter: blur(12px);
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012) 36%, rgba(0, 0, 0, 0.35)),
+        rgba(8, 8, 9, 0.66);
+    backdrop-filter: blur(18px);
+    transition:
+        transform 0.7s var(--ease-smooth),
+        box-shadow 0.7s var(--ease-smooth),
+        border-color 0.7s var(--ease-smooth),
+        background 0.7s var(--ease-smooth);
     z-index: 1;
 }
 
-/* Common Overlay for Atmospheric Effects */
 .section-card-wrapper::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -1;
-    opacity: 0.3;
-    transition: opacity 0.5s ease;
+    opacity: 0.68;
+    background:
+        linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.06) 42%, transparent 58%),
+        radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.08), transparent 34%);
+    transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-smooth);
+}
+
+.section-card-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+    opacity: 0;
+    transform: translateX(-120%);
+    transition: transform 0.9s var(--ease-smooth), opacity 0.5s var(--ease-smooth);
 }
 
 .section-card-wrapper:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -12px rgba(2, 6, 23, 0.8);
-    border-color: rgba(148, 163, 184, 0.1);
+    transform: translateY(-6px);
+    box-shadow:
+        0 32px 90px rgba(0, 0, 0, 0.44),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
     z-index: 10;
 }
 
 .section-card-wrapper:hover::before {
-    opacity: 0.5;
+    opacity: 1;
+    transform: scale(1.01);
 }
 
-/* --- THEME 1: INDIGO (Deep) --- */
-.theme-violet {
-    border-color: rgba(99, 102, 241, 0.15);
-    /* Indigo */
+.section-card-wrapper:hover::after {
+    opacity: 1;
+    transform: translateX(120%);
 }
 
-.theme-violet::before {
-    background:
-        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.08), transparent 60%),
-        radial-gradient(circle at 100% 100%, rgba(30, 58, 138, 0.08), transparent 60%);
-}
-
-/* --- THEME 2: BLUE (Slate Blue) --- */
-.theme-blue {
-    border-color: rgba(56, 189, 248, 0.15);
-}
-
-.theme-blue::before {
-    background:
-        linear-gradient(180deg, rgba(56, 189, 248, 0.03) 0%, transparent 100%);
-}
-
-/* --- THEME 3: TEAL (Subtle) --- */
-.theme-green {
-    border-color: rgba(20, 184, 166, 0.15);
-}
-
-.theme-green::before {
-    background: radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.05), transparent 70%);
-}
-
-/* --- THEME 4: SLATE (Neutral) --- */
+.theme-violet,
+.theme-blue,
+.theme-green,
 .theme-orange {
-    border-color: rgba(148, 163, 184, 0.15);
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
+.theme-violet::before,
+.theme-blue::before,
+.theme-green::before,
 .theme-orange::before {
-    background: radial-gradient(circle at 50% 0%, rgba(148, 163, 184, 0.05), transparent 60%);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 36%),
+        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.06), transparent 30%);
 }
 
-/* Animations (Simplified) */
-@keyframes pulseNebula {
-    0% {
-        opacity: 0.3;
-    }
-
-    100% {
-        opacity: 0.5;
-    }
+.theme-green {
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.01) 42%, rgba(0, 0, 0, 0.45)),
+        rgba(10, 10, 11, 0.72);
 }
 
-/* Bento Grid */
 .bento-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -120,12 +115,12 @@
 
 @media (max-width: 768px) {
     .section-card-wrapper {
-        padding: 2rem 1.5rem;
-        border-radius: 1rem;
+        padding: 1.65rem 1rem;
+        border-radius: 0.85rem;
     }
 
     .bento-grid {
-        gap: 1rem;
+        gap: 0.9rem;
         padding: 1rem 0;
     }
 }

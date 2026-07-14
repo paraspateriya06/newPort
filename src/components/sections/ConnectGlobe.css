@@ -1,0 +1,286 @@
+.connect-globe-section {
+    min-height: clamp(360px, 54vw, 480px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    isolation: isolate;
+}
+
+.globe-stage {
+    width: clamp(220px, 28vw, 330px);
+    aspect-ratio: 1;
+    position: relative;
+    display: grid;
+    place-items: center;
+    margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
+    perspective: 900px;
+    transform-style: preserve-3d;
+}
+
+.globe-stage::before {
+    content: '';
+    position: absolute;
+    inset: 12%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 64%);
+    filter: blur(28px);
+    opacity: 0.48;
+    animation: globeBreathe 6s ease-in-out infinite;
+}
+
+.globe-orbit {
+    position: absolute;
+    inset: 8%;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 50%;
+    transform: rotateX(68deg) rotateZ(-18deg);
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.04);
+    will-change: transform;
+}
+
+.orbit-one {
+    animation: orbitSweep 14s linear infinite;
+}
+
+.orbit-two {
+    inset: 18%;
+    opacity: 0.48;
+    transform: rotateX(62deg) rotateZ(28deg);
+    animation: orbitSweep 18s linear infinite reverse;
+}
+
+.globe-shell {
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.7), rgba(190, 190, 190, 0.22) 16%, transparent 27%),
+        radial-gradient(circle at 65% 70%, rgba(255, 255, 255, 0.14), transparent 34%),
+        radial-gradient(circle at 45% 52%, rgba(255, 255, 255, 0.08), transparent 44%),
+        linear-gradient(145deg, #303033 0%, #101011 48%, #020202 100%);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow:
+        inset -28px -36px 50px rgba(0, 0, 0, 0.82),
+        inset 12px 12px 34px rgba(255, 255, 255, 0.08),
+        0 34px 80px rgba(0, 0, 0, 0.54),
+        0 0 42px rgba(255, 255, 255, 0.08);
+    animation: globeFloat 7s ease-in-out infinite;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.globe-shell::before,
+.globe-shell::after {
+    content: '';
+    position: absolute;
+    inset: 5%;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.globe-shell::before {
+    border-left: 1px solid rgba(255, 255, 255, 0.19);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    transform: rotateY(58deg);
+}
+
+.globe-shell::after {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    transform: rotateY(-58deg);
+}
+
+.globe-shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle at 32% 28%, transparent 0%, transparent 30%, rgba(0, 0, 0, 0.1) 52%, rgba(0, 0, 0, 0.78) 100%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 34%, rgba(0, 0, 0, 0.7));
+    z-index: 5;
+    pointer-events: none;
+}
+
+.globe-grid-lines {
+    position: absolute;
+    inset: -4%;
+    border-radius: 50%;
+    background-image:
+        repeating-radial-gradient(ellipse at center, transparent 0 18px, rgba(255, 255, 255, 0.1) 19px, transparent 20px),
+        repeating-linear-gradient(90deg, transparent 0 24px, rgba(255, 255, 255, 0.1) 25px, transparent 26px);
+    opacity: 0.34;
+    transform: skewX(-8deg) rotateY(12deg);
+    animation: globeGridDrift 32s linear infinite;
+    z-index: 3;
+    mix-blend-mode: screen;
+}
+
+.globe-latitudes {
+    position: absolute;
+    inset: 10%;
+    border-radius: 50%;
+    background:
+        linear-gradient(transparent 23%, rgba(255, 255, 255, 0.13) 24%, transparent 25%),
+        linear-gradient(transparent 49%, rgba(255, 255, 255, 0.22) 50%, transparent 51%),
+        linear-gradient(transparent 74%, rgba(255, 255, 255, 0.12) 75%, transparent 76%);
+    opacity: 0.54;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.globe-map {
+    position: absolute;
+    inset: 8% -34%;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1200px-World_map_-_low_resolution.svg.png");
+    background-size: auto 72%;
+    background-repeat: repeat-x;
+    background-position: 0 center;
+    opacity: 0.36;
+    filter: invert(1) grayscale(1) contrast(1.55) brightness(1.15);
+    mix-blend-mode: screen;
+    animation: globeMapSpin 30s linear infinite;
+    transform: rotateY(0deg) translateZ(1px);
+    z-index: 2;
+    will-change: background-position;
+}
+
+.globe-glint {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(120deg, transparent 18%, rgba(255, 255, 255, 0.24) 46%, transparent 60%);
+    transform: translateX(-120%) rotate(10deg);
+    animation: globeGlint 5.6s var(--ease-smooth) infinite;
+    z-index: 6;
+    pointer-events: none;
+}
+
+.social-links-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.social-btn {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 50%;
+    transition:
+        transform 0.45s var(--ease-smooth),
+        color 0.45s var(--ease-smooth),
+        background 0.45s var(--ease-smooth),
+        border-color 0.45s var(--ease-smooth),
+        box-shadow 0.45s var(--ease-smooth);
+}
+
+.social-btn:hover {
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.24);
+    transform: translateY(-5px);
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.38), 0 0 22px rgba(255, 255, 255, 0.06);
+}
+
+@keyframes globeFloat {
+    0%,
+    100% {
+        transform: translateY(0) rotateX(0deg) rotateZ(-1deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotateX(2deg) rotateZ(1deg);
+    }
+}
+
+@keyframes globeBreathe {
+    0%,
+    100% {
+        opacity: 0.36;
+        transform: scale(0.96);
+    }
+
+    50% {
+        opacity: 0.62;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes orbitSweep {
+    0% {
+        transform: rotateX(68deg) rotateZ(-18deg);
+    }
+
+    100% {
+        transform: rotateX(68deg) rotateZ(342deg);
+    }
+}
+
+@keyframes globeGridDrift {
+    to {
+        background-position: 0 0, 64px 0;
+    }
+}
+
+@keyframes globeMapSpin {
+    to {
+        background-position: 520px center;
+    }
+}
+
+@keyframes globeGlint {
+    0%,
+    58% {
+        transform: translateX(-125%) rotate(10deg);
+        opacity: 0;
+    }
+
+    72% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(125%) rotate(10deg);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .connect-globe-section {
+        min-height: 360px;
+    }
+
+    .globe-stage {
+        width: min(250px, 74vw);
+        margin-bottom: 1.25rem;
+    }
+
+    .social-btn {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .globe-stage::before,
+    .globe-orbit,
+    .globe-shell,
+    .globe-grid-lines,
+    .globe-map,
+    .globe-glint,
+    .social-btn {
+        animation: none;
+        transition: none;
+    }
+}

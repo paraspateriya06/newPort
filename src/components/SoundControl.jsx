@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FaPlay, FaPause, FaSpinner } from 'react-icons/fa';
+import { FaPlay, FaPause } from 'react-icons/fa';
 
 const SoundControl = () => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -42,9 +42,9 @@ const SoundControl = () => {
                     right: '2rem',
                     zIndex: 1000,
                     background: isPlaying 
-                      ? 'rgba(139, 92, 246, 0.4)' 
-                      : 'rgba(30, 41, 59, 0.6)',
-                    border: '1px solid var(--primary-accent)',
+                      ? 'rgba(255, 255, 255, 0.13)'
+                      : 'rgba(12, 12, 13, 0.78)',
+                    border: '1px solid rgba(255,255,255,0.16)',
                     color: 'white',
                     borderRadius: '50%',
                     width: '60px',
@@ -53,10 +53,10 @@ const SoundControl = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: 'pointer',
-                    backdropFilter: 'blur(10px)',
-                    boxShadow: isPlaying ? '0 0 20px rgba(139, 92, 246, 0.6)' : '0 4px 6px rgba(0,0,0,0.1)',
-                    transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                    transform: isPlaying ? 'scale(1.1)' : 'scale(1)'
+                    backdropFilter: 'blur(16px)',
+                    boxShadow: isPlaying ? '0 0 28px rgba(255,255,255,0.12)' : '0 16px 36px rgba(0,0,0,0.34)',
+                    transition: 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
+                    transform: isPlaying ? 'scale(1.04)' : 'scale(1)'
                 }}
                 aria-label={isPlaying ? "Pause Ambient Sound" : "Play Ambient Sound"}
             >

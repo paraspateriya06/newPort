@@ -4,10 +4,10 @@ import { FaCogs, FaBug, FaRocket, FaTools } from 'react-icons/fa';
 
 const Workflow = () => {
     const steps = [
-        { name: 'Prototype', icon: <FaTools />, color: '#94a3b8' },
-        { name: 'Build', icon: <FaCogs />, color: '#60a5fa' },
-        { name: 'Debug', icon: <FaBug />, color: '#f87171' },
-        { name: 'Refine', icon: <FaRocket />, color: '#34d399' }
+        { name: 'Prototype', icon: <FaTools /> },
+        { name: 'Build', icon: <FaCogs /> },
+        { name: 'Debug', icon: <FaBug /> },
+        { name: 'Refine', icon: <FaRocket /> }
     ];
 
   return (
@@ -17,7 +17,7 @@ const Workflow = () => {
       </h2>
       
       <div className="workflow-steps" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative'}}>
-         <div style={{position: 'absolute', top: '25px', left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.1)', zIndex: 0}} />
+         <div style={{position: 'absolute', top: '25px', left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)', zIndex: 0}} />
          
          {steps.map((step, i) => (
              <motion.div 
@@ -26,18 +26,20 @@ const Workflow = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.15 }}
+                whileHover={{ y: -6 }}
                 style={{zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', background: 'var(--bg-color)', padding: '0.5rem'}}
              >
                  <div className="step-icon" style={{
                      width: '50px', 
                      height: '50px', 
                      borderRadius: '50%', 
-                     background: 'rgba(30, 41, 59, 0.8)',
-                     border: `1px solid ${step.color}`,
+                     background: 'linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02))',
+                     border: '1px solid rgba(255,255,255,0.18)',
                      display: 'flex', 
                      alignItems: 'center', 
                      justifyContent: 'center',
-                     color: step.color
+                     color: 'var(--text-color)',
+                     boxShadow: '0 12px 28px rgba(0,0,0,0.32)'
                  }}>
                      {step.icon}
                  </div>

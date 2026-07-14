@@ -11,9 +11,8 @@ function WaveParticles({ count = 2000 }) {
     const positions = new Float32Array(count * 3);
     const basicColors = new Float32Array(count * 3);
     
-    // Base colors: Cyan and Deep Blue (Google / tech inspired)
-    const color1 = new THREE.Color('#22d3ee'); // Cyan
-    const color2 = new THREE.Color('#3b82f6'); // Blue
+    const color1 = new THREE.Color('#f5f5f5');
+    const color2 = new THREE.Color('#525252');
     const tempColor = new THREE.Color();
 
     for (let i = 0; i < count; i++) {
@@ -82,10 +81,10 @@ function WaveParticles({ count = 2000 }) {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.12}
+        size={0.09}
         vertexColors
         transparent
-        opacity={0.8}
+        opacity={0.36}
         sizeAttenuation={true}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
@@ -99,8 +98,8 @@ export default function Background3D() {
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1, pointerEvents: 'none' }}>
       <Canvas camera={{ position: [0, 5, 20], fov: 60 }}>
         {/* Deep, dark fog to fade things seamlessly into the background */}
-        <fog attach="fog" args={['#020617', 10, 40]} />
-        <ambientLight intensity={0.2} />
+        <fog attach="fog" args={['#030303', 10, 40]} />
+        <ambientLight intensity={0.14} />
         
         {/* Core flowing particle wave */}
         <WaveParticles count={4000} />

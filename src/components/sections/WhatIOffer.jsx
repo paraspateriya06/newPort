@@ -14,21 +14,21 @@ const WhatIOffer = () => {
 
         <div style={{display: 'grid', gap: '1rem'}}>
             <motion.div className="offer-item" whileHover={{x: 5}}>
-                <FaBolt color="#fbbf24" style={{marginTop: '3px'}} />
+                <FaBolt color="var(--text-color)" style={{marginTop: '3px'}} />
                 <div>
                     <h4 style={{fontWeight: '600'}}>Consistency</h4>
                     <p style={{fontSize: '0.85rem', color: 'var(--text-secondary)'}}>Delivering reliable code, day in, day out.</p>
                 </div>
             </motion.div>
             <motion.div className="offer-item" whileHover={{x: 5}}>
-               <FaLayerGroup color="#34d399" style={{marginTop: '3px'}} />
+               <FaLayerGroup color="var(--text-color)" style={{marginTop: '3px'}} />
                 <div>
                     <h4 style={{fontWeight: '600'}}>Scalable Architecture</h4>
                     <p style={{fontSize: '0.85rem', color: 'var(--text-secondary)'}}>Designing systems that grow with your needs.</p>
                 </div>
             </motion.div>
             <motion.div className="offer-item" whileHover={{x: 5}}>
-               <FaCode color="#60a5fa" style={{marginTop: '3px'}} />
+               <FaCode color="var(--text-color)" style={{marginTop: '3px'}} />
                 <div>
                     <h4 style={{fontWeight: '600'}}>Clean Code</h4>
                     <p style={{fontSize: '0.85rem', color: 'var(--text-secondary)'}}>Readable, maintainable, and efficient solutions.</p>

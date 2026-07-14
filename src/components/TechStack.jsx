@@ -58,9 +58,9 @@ const TechStack = () => {
               }}
               viewport={{ once: true }}
               whileHover={{ 
-                scale: 1.1, 
-                rotate: 5, 
-                boxShadow: "0 0 20px rgba(139, 92, 246, 0.5)" 
+                scale: 1.04,
+                y: -6,
+                boxShadow: "0 22px 54px rgba(0, 0, 0, 0.42)"
               }}
             >
               <div className="skill-icon" style={{color: skill.icon.props.color || 'inherit'}}>
