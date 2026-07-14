@@ -21,7 +21,7 @@
     margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
     perspective: 900px;
     transform-style: preserve-3d;
-    cursor: crosshair;
+    cursor: default;
 }
 
 .globe-stage::before {
@@ -41,19 +41,19 @@
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 50%;
     transform: rotateX(68deg) rotateZ(-18deg);
-    box-shadow: 0 0 24px rgba(255, 255, 255, 0.04);
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.035);
     will-change: transform;
 }
 
 .orbit-one {
-    animation: orbitSweep 14s linear infinite;
+    animation: orbitSweep 42s linear infinite;
 }
 
 .orbit-two {
     inset: 18%;
     opacity: 0.48;
     transform: rotateX(62deg) rotateZ(28deg);
-    animation: orbitSweep 18s linear infinite reverse;
+    animation: orbitSweep 52s linear infinite reverse;
 }
 
 .globe-shell {
@@ -63,44 +63,57 @@
     position: relative;
     overflow: hidden;
     background:
-        radial-gradient(circle at var(--globe-light-x) var(--globe-light-y), rgba(255, 255, 255, 0.74), rgba(190, 190, 190, 0.24) 16%, transparent 27%),
-        radial-gradient(circle at 65% 70%, rgba(255, 255, 255, 0.14), transparent 34%),
-        radial-gradient(circle at 45% 52%, rgba(255, 255, 255, 0.08), transparent 44%),
-        linear-gradient(145deg, #303033 0%, #101011 48%, #020202 100%);
+        radial-gradient(circle at var(--globe-light-x) var(--globe-light-y), rgba(255, 255, 255, 0.66), rgba(190, 190, 190, 0.2) 14%, transparent 27%),
+        radial-gradient(circle at 64% 68%, rgba(255, 255, 255, 0.1), transparent 34%),
+        linear-gradient(145deg, #27272a 0%, #0f0f10 48%, #020202 100%);
     border: 1px solid rgba(255, 255, 255, 0.22);
     box-shadow:
         inset -28px -36px 50px rgba(0, 0, 0, 0.82),
         inset 12px 12px 34px rgba(255, 255, 255, 0.08),
         0 34px 80px rgba(0, 0, 0, 0.54),
         0 0 42px rgba(255, 255, 255, 0.08);
-    animation: globeConstantRotate 18s linear infinite;
+    transform:
+        rotateX(var(--globe-tilt-x))
+        rotateY(var(--globe-tilt-y));
     transform-style: preserve-3d;
     will-change: transform;
     transition:
-        background 0.75s var(--ease-smooth),
+        transform 0.9s var(--ease-smooth),
+        background 0.9s var(--ease-smooth),
         box-shadow 0.75s var(--ease-smooth);
 }
 
-.globe-shell::before,
-.globe-shell::after {
+.globe-surface {
+    position: absolute;
+    inset: -4% -34%;
+    z-index: 2;
+    transform: translateZ(1px);
+    animation: globeSurfaceRotate 34s linear infinite;
+    will-change: transform;
+}
+
+.globe-surface::before,
+.globe-surface::after {
     content: '';
     position: absolute;
-    inset: 5%;
+    inset: 0;
     border-radius: 50%;
     pointer-events: none;
+}
+
+.globe-surface::before {
+    background:
+        linear-gradient(90deg, transparent 0 12%, rgba(255, 255, 255, 0.12) 12.4%, transparent 13.2%),
+        linear-gradient(90deg, transparent 0 30%, rgba(255, 255, 255, 0.09) 30.5%, transparent 31.3%),
+        linear-gradient(90deg, transparent 0 50%, rgba(255, 255, 255, 0.16) 50.4%, transparent 51.2%),
+        linear-gradient(90deg, transparent 0 70%, rgba(255, 255, 255, 0.09) 70.5%, transparent 71.3%),
+        linear-gradient(90deg, transparent 0 88%, rgba(255, 255, 255, 0.12) 88.4%, transparent 89.2%);
+    opacity: 0.62;
+}
+
+.globe-surface::after {
+    background: radial-gradient(ellipse at center, transparent 0 48%, rgba(0, 0, 0, 0.28) 72%, rgba(0, 0, 0, 0.58) 100%);
     z-index: 4;
-}
-
-.globe-shell::before {
-    border-left: 1px solid rgba(255, 255, 255, 0.19);
-    border-right: 1px solid rgba(255, 255, 255, 0.06);
-    transform: rotateY(58deg);
-}
-
-.globe-shell::after {
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-    border-right: 1px solid rgba(255, 255, 255, 0.12);
-    transform: rotateY(-58deg);
 }
 
 .globe-shadow {
@@ -116,14 +129,13 @@
 
 .globe-grid-lines {
     position: absolute;
-    inset: -4%;
+    inset: 4% 20%;
     border-radius: 50%;
     background-image:
-        repeating-radial-gradient(ellipse at center, transparent 0 18px, rgba(255, 255, 255, 0.1) 19px, transparent 20px),
-        repeating-linear-gradient(90deg, transparent 0 24px, rgba(255, 255, 255, 0.1) 25px, transparent 26px);
-    opacity: 0.34;
-    transform: skewX(-8deg) rotateY(12deg);
-    animation: globeGridDrift 18s linear infinite;
+        repeating-radial-gradient(ellipse at center, transparent 0 18px, rgba(255, 255, 255, 0.11) 19px, transparent 20px),
+        repeating-linear-gradient(90deg, transparent 0 26px, rgba(255, 255, 255, 0.12) 27px, transparent 28px);
+    opacity: 0.46;
+    transform: skewX(-7deg);
     z-index: 3;
     mix-blend-mode: screen;
 }
@@ -141,18 +153,35 @@
     pointer-events: none;
 }
 
+.globe-meridian {
+    position: absolute;
+    inset: 7%;
+    border-radius: 50%;
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 4;
+    pointer-events: none;
+}
+
+.meridian-primary {
+    transform: rotateY(58deg);
+}
+
+.meridian-secondary {
+    opacity: 0.68;
+    transform: rotateY(-58deg);
+}
+
 .globe-map {
     position: absolute;
-    inset: 8% -34%;
+    inset: 4% 0;
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1200px-World_map_-_low_resolution.svg.png");
     background-size: auto 72%;
     background-repeat: repeat-x;
     background-position: 0 center;
-    opacity: 0.36;
-    filter: invert(1) grayscale(1) contrast(1.55) brightness(1.15);
+    opacity: 0.32;
+    filter: invert(1) grayscale(1) contrast(1.6) brightness(1.08);
     mix-blend-mode: screen;
-    animation: globeMapSpin 18s linear infinite;
-    transform: rotateY(0deg) translateZ(1px);
     z-index: 2;
     will-change: background-position;
 }
@@ -163,7 +192,7 @@
     border-radius: inherit;
     background: linear-gradient(120deg, transparent 18%, rgba(255, 255, 255, 0.24) 46%, transparent 60%);
     transform: translateX(-120%) rotate(10deg);
-    animation: globeGlint 5.6s var(--ease-smooth) infinite;
+    animation: globeGlint 8s var(--ease-smooth) infinite;
     z-index: 6;
     pointer-events: none;
 }
@@ -208,29 +237,13 @@
     letter-spacing: 0;
 }
 
-@keyframes globeConstantRotate {
-    0% {
-        transform:
-            translateY(0)
-            rotateX(var(--globe-tilt-x))
-            rotateY(var(--globe-tilt-y))
-            rotateZ(-1deg);
+@keyframes globeSurfaceRotate {
+    from {
+        transform: translateZ(1px) translateX(0);
     }
 
-    50% {
-        transform:
-            translateY(-8px)
-            rotateX(calc(var(--globe-tilt-x) + 1deg))
-            rotateY(calc(var(--globe-tilt-y) + 180deg))
-            rotateZ(1deg);
-    }
-
-    100% {
-        transform:
-            translateY(0)
-            rotateX(var(--globe-tilt-x))
-            rotateY(calc(var(--globe-tilt-y) + 360deg))
-            rotateZ(-1deg);
+    to {
+        transform: translateZ(1px) translateX(-28%);
     }
 }
 
@@ -254,18 +267,6 @@
 
     100% {
         transform: rotateX(68deg) rotateZ(342deg);
-    }
-}
-
-@keyframes globeGridDrift {
-    to {
-        background-position: 0 0, 64px 0;
-    }
-}
-
-@keyframes globeMapSpin {
-    to {
-        background-position: 520px center;
     }
 }
 
@@ -305,9 +306,7 @@
 @media (prefers-reduced-motion: reduce) {
     .globe-stage::before,
     .globe-orbit,
-    .globe-shell,
-    .globe-grid-lines,
-    .globe-map,
+    .globe-surface,
     .globe-glint,
     .social-btn {
         animation: none;

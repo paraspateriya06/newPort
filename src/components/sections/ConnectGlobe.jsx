@@ -18,10 +18,10 @@ const ConnectGlobe = () => {
         const x = (event.clientX - rect.left) / rect.width - 0.5;
         const y = (event.clientY - rect.top) / rect.height - 0.5;
 
-        globe.style.setProperty('--globe-tilt-x', `${(-y * 11).toFixed(2)}deg`);
-        globe.style.setProperty('--globe-tilt-y', `${(x * 14).toFixed(2)}deg`);
-        globe.style.setProperty('--globe-light-x', `${(32 + x * 18).toFixed(2)}%`);
-        globe.style.setProperty('--globe-light-y', `${(28 + y * 16).toFixed(2)}%`);
+        globe.style.setProperty('--globe-tilt-x', `${(-y * 5).toFixed(2)}deg`);
+        globe.style.setProperty('--globe-tilt-y', `${(x * 7).toFixed(2)}deg`);
+        globe.style.setProperty('--globe-light-x', `${(32 + x * 10).toFixed(2)}%`);
+        globe.style.setProperty('--globe-light-y', `${(28 + y * 8).toFixed(2)}%`);
     };
 
     const handlePointerLeave = () => {
@@ -49,10 +49,14 @@ const ConnectGlobe = () => {
                 <div className="globe-orbit orbit-one" />
                 <div className="globe-orbit orbit-two" />
                 <div className="globe-shell">
-                    <div className="globe-shadow" />
-                    <div className="globe-grid-lines" />
+                    <div className="globe-surface">
+                        <div className="globe-map" />
+                        <div className="globe-grid-lines" />
+                    </div>
                     <div className="globe-latitudes" />
-                    <div className="globe-map" />
+                    <div className="globe-meridian meridian-primary" />
+                    <div className="globe-meridian meridian-secondary" />
+                    <div className="globe-shadow" />
                     <span className="globe-glint" />
                 </div>
             </motion.div>
