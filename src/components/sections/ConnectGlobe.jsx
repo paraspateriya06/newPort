@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
 import './ConnectGlobe.css';
+
+const XIcon = () => (
+    <span className="x-social-mark" aria-hidden="true">X</span>
+);
 
 const ConnectGlobe = () => {
     return (
@@ -28,7 +31,7 @@ const ConnectGlobe = () => {
             <h2 className="section-title">Let's Connect Globally</h2>
             
             <div className="social-links-row">
-                <a href="https://x.com/Paras_Paterya06" className="social-btn" aria-label="X"><FaXTwitter size={21} /></a>
+                <a href="https://x.com/Paras_Paterya06" className="social-btn" aria-label="X"><XIcon /></a>
                 <a href="https://github.com/paraspateriya06" className="social-btn" aria-label="GitHub"><FaGithub size={22} /></a>
                 <a href="https://www.linkedin.com/in/parasmpaterya06/" className="social-btn" aria-label="LinkedIn"><FaLinkedin size={22} /></a>
                 <a href="mailto:paraspaterya616@gmail.com" className="social-btn" aria-label="Email"><FaEnvelope size={22} /></a>
