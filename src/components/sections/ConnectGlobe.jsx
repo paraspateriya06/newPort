@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPaperPlane, FaSpinner, FaTimes } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaPaperPlane, FaTimes } from 'react-icons/fa';
 import './ConnectGlobe.css';
 
 const XIcon = () => (
@@ -56,40 +56,26 @@ const ConnectGlobe = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setSubmitState({ status: 'loading', message: '' });
-
-        try {
-            const response = await fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data?.message || 'Unable to send message right now.');
-            }
-
-            setSubmitState({
-                status: 'success',
-                message: data.message || 'Message sent successfully.',
-            });
-            setFormData({
-                name: '',
-                email: '',
-                subject: '',
-                message: '',
-                website: '',
-            });
-        } catch (error) {
-            setSubmitState({
-                status: 'error',
-                message: error.message || 'Something went wrong. Please try again.',
-            });
+        if (formData.website) {
+            setSubmitState({ status: 'success', message: 'Opening Gmail...' });
+            return;
         }
+
+        const body = [
+            `Name: ${formData.name}`,
+            `Email: ${formData.email}`,
+            '',
+            formData.message,
+        ].join('\n');
+
+        const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent('paraspaterya74@gmail.com')}&su=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
+
+        window.open(gmailComposeUrl, '_blank', 'noopener,noreferrer');
+
+        setSubmitState({
+            status: 'success',
+            message: 'Gmail compose opened with your message.',
+        });
     };
 
     const openForm = () => {
@@ -151,118 +137,120 @@ const ConnectGlobe = () => {
                 <AnimatePresence>
                     {isFormOpen ? (
                         <motion.div
-                            className="contact-form-shell"
-                            initial={{ opacity: 0, x: 80 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 80 }}
-                            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                            className="contact-drawer-overlay"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            onClick={closeForm}
                         >
-                            <motion.form
-                                className="contact-form-panel"
-                                onSubmit={handleSubmit}
-                                initial={{ opacity: 0, scale: 0.96 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.96 }}
-                                transition={{ duration: 0.35 }}
+                            <motion.div
+                                className="contact-form-shell"
+                                initial={{ opacity: 0, x: 80 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 80 }}
+                                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                                onClick={(event) => event.stopPropagation()}
                             >
-                                <div className="contact-form-header">
-                                    <div className="form-chip">Get In Touch</div>
-                                    <button type="button" className="contact-close-button" onClick={closeForm} aria-label="Close contact form">
-                                        <FaTimes />
-                                    </button>
-                                </div>
+                                <motion.form
+                                    className="contact-form-panel"
+                                    onSubmit={handleSubmit}
+                                    initial={{ opacity: 0, scale: 0.98 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.98 }}
+                                    transition={{ duration: 0.25 }}
+                                >
+                                    <div className="contact-form-header">
+                                        <div className="form-chip">Get In Touch</div>
+                                        <button type="button" className="contact-close-button" onClick={closeForm} aria-label="Close contact form">
+                                            <FaTimes />
+                                        </button>
+                                    </div>
 
-                                <div className="contact-form-grid">
-                                    <label className="contact-field">
-                                        <span>Your Name</span>
+                                    <div className="contact-form-grid">
+                                        <label className="contact-field">
+                                            <span>Your Name</span>
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                value={formData.name}
+                                                onChange={handleChange}
+                                                placeholder="Paras, let's talk..."
+                                                required
+                                            />
+                                        </label>
+
+                                        <label className="contact-field">
+                                            <span>Email Address</span>
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                placeholder="you@example.com"
+                                                required
+                                            />
+                                        </label>
+
+                                        <label className="contact-field contact-field-full">
+                                            <span>Subject</span>
+                                            <input
+                                                type="text"
+                                                name="subject"
+                                                value={formData.subject}
+                                                onChange={handleChange}
+                                                placeholder="What do you want to build?"
+                                                required
+                                            />
+                                        </label>
+
+                                        <label className="contact-field contact-field-full">
+                                            <span>Message</span>
+                                            <textarea
+                                                name="message"
+                                                value={formData.message}
+                                                onChange={handleChange}
+                                                placeholder="Tell me about your idea, timeline, and goals."
+                                                rows="6"
+                                                required
+                                            />
+                                        </label>
+
                                         <input
                                             type="text"
-                                            name="name"
-                                            value={formData.name}
+                                            name="website"
+                                            value={formData.website}
                                             onChange={handleChange}
-                                            placeholder="Paras, let's talk..."
-                                            required
+                                            className="contact-honeypot"
+                                            tabIndex="-1"
+                                            autoComplete="off"
+                                            aria-hidden="true"
                                         />
-                                    </label>
+                                    </div>
 
-                                    <label className="contact-field">
-                                        <span>Email Address</span>
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            placeholder="you@example.com"
-                                            required
-                                        />
-                                    </label>
-
-                                    <label className="contact-field contact-field-full">
-                                        <span>Subject</span>
-                                        <input
-                                            type="text"
-                                            name="subject"
-                                            value={formData.subject}
-                                            onChange={handleChange}
-                                            placeholder="What do you want to build?"
-                                            required
-                                        />
-                                    </label>
-
-                                    <label className="contact-field contact-field-full">
-                                        <span>Message</span>
-                                        <textarea
-                                            name="message"
-                                            value={formData.message}
-                                            onChange={handleChange}
-                                            placeholder="Tell me about your idea, timeline, and goals."
-                                            rows="6"
-                                            required
-                                        />
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="website"
-                                        value={formData.website}
-                                        onChange={handleChange}
-                                        className="contact-honeypot"
-                                        tabIndex="-1"
-                                        autoComplete="off"
-                                        aria-hidden="true"
-                                    />
-                                </div>
-
-                                <div className="contact-form-footer">
-                                    <button
-                                        type="submit"
-                                        className="contact-submit-button"
-                                        disabled={submitState.status === 'loading'}
-                                    >
-                                        {submitState.status === 'loading' ? (
-                                            <>
-                                                <FaSpinner className="spin-icon" />
-                                                Sending...
-                                            </>
-                                        ) : (
+                                    <div className="contact-form-footer">
+                                        <button
+                                            type="submit"
+                                            className="contact-submit-button"
+                                        >
                                             <>
                                                 <FaPaperPlane />
-                                                Send Message
+                                                Open In Gmail
                                             </>
-                                        )}
-                                    </button>
+                                        </button>
 
-                                    <motion.p
-                                        key={submitState.status + submitState.message}
-                                        className={`contact-status contact-status-${submitState.status}`}
-                                        initial={{ opacity: 0, y: 8 }}
-                                        animate={{ opacity: submitState.message ? 1 : 0, y: submitState.message ? 0 : 8 }}
-                                        transition={{ duration: 0.3 }}
-                                    >
-                                        {submitState.message || ' '}
-                                    </motion.p>
-                                </div>
-                            </motion.form>
+                                        <motion.p
+                                            key={submitState.status + submitState.message}
+                                            className={`contact-status contact-status-${submitState.status}`}
+                                            initial={{ opacity: 0, y: 8 }}
+                                            animate={{ opacity: submitState.message ? 1 : 0, y: submitState.message ? 0 : 8 }}
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            {submitState.message || ' '}
+                                        </motion.p>
+                                    </div>
+                                </motion.form>
+                            </motion.div>
                         </motion.div>
                     ) : null}
                 </AnimatePresence>
