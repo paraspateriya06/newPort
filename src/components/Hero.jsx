@@ -36,10 +36,6 @@ const Hero = () => {
           initial="hidden"
           animate="show"
         >
-          <motion.div variants={itemVariants} className="hero-signal">
-            <span className="signal-dot" />
-            Production-grade backend systems with cinematic frontend polish
-          </motion.div>
           <motion.span variants={itemVariants} className="greeting">Hi, I&apos;m</motion.span>
           <motion.h1 variants={itemVariants} className="hero-title">
             Paras Mani <br />
