@@ -1,19 +1,25 @@
-import React, { useRef } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import TechStack from './components/TechStack';
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-
-import Timezone from './components/Timezone';
-import SoundControl from './components/SoundControl';
-import Journey from './components/sections/Journey';
-import WhatIOffer from './components/sections/WhatIOffer';
-import Workflow from './components/sections/Workflow';
-import ConnectGlobe from './components/sections/ConnectGlobe';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import './Layout.css';
-import Background3D from './components/Background3D';
+
+const lazyWithPreload = (factory) => {
+  const Component = lazy(factory);
+  Component.preload = factory;
+  return Component;
+};
+
+const Background3D = lazyWithPreload(() => import('./components/Background3D'));
+const TechStack = lazyWithPreload(() => import('./components/TechStack'));
+const Experience = lazyWithPreload(() => import('./components/Experience'));
+const Projects = lazyWithPreload(() => import('./components/Projects'));
+const Timezone = lazyWithPreload(() => import('./components/Timezone'));
+const SoundControl = lazyWithPreload(() => import('./components/SoundControl'));
+const Journey = lazyWithPreload(() => import('./components/sections/Journey'));
+const WhatIOffer = lazyWithPreload(() => import('./components/sections/WhatIOffer'));
+const Workflow = lazyWithPreload(() => import('./components/sections/Workflow'));
+const ConnectGlobe = lazyWithPreload(() => import('./components/sections/ConnectGlobe'));
 
 // Wrapper for themed sections
 const SectionCard = ({ children, className, theme = "default", id, delay = 0 }) => (
@@ -33,13 +39,73 @@ const SectionCard = ({ children, className, theme = "default", id, delay = 0 }) 
   </motion.div>
 );
 
+const SectionFallback = ({ title, lines = 3, compact = false }) => (
+  <div className={`section-fallback ${compact ? 'compact' : ''}`}>
+    <div className="section-fallback-title shimmer-block" style={{ width: title || '40%' }} />
+    <div className="section-fallback-grid">
+      {Array.from({ length: lines }).map((_, index) => (
+        <div key={index} className="section-fallback-line shimmer-block" />
+      ))}
+    </div>
+  </div>
+);
+
 function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const [pointerGlow, setPointerGlow] = useState({ x: 50, y: 18 });
+
+  useEffect(() => {
+    const preload = () => {
+      [
+        Background3D,
+        SoundControl,
+        TechStack,
+        Timezone,
+        WhatIOffer,
+        Journey,
+        Workflow,
+        Experience,
+        Projects,
+        ConnectGlobe,
+      ].forEach((component) => component.preload?.());
+    };
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(preload, { timeout: 1500 });
+      return () => window.cancelIdleCallback?.(idleId);
+    }
+
+    const timeoutId = window.setTimeout(preload, 900);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
+  useEffect(() => {
+    const handlePointerMove = (event) => {
+      setPointerGlow({
+        x: (event.clientX / window.innerWidth) * 100,
+        y: (event.clientY / window.innerHeight) * 100,
+      });
+    };
+
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    return () => window.removeEventListener('pointermove', handlePointerMove);
+  }, []);
 
   return (
-    <div className="App" style={{ position: 'relative', overflowX: 'hidden' }}>
-       <Background3D />
+    <div
+      className="App"
+      style={{
+        position: 'relative',
+        overflowX: 'hidden',
+        '--pointer-x': `${pointerGlow.x}%`,
+        '--pointer-y': `${pointerGlow.y}%`,
+      }}
+    >
+       <div className="app-spotlight" aria-hidden="true" />
+       <Suspense fallback={null}>
+         <Background3D />
+       </Suspense>
        {/* Scroll Progress Bar */}
       <motion.div
         style={{
@@ -55,7 +121,9 @@ function App() {
         }}
       />
       
-      <SoundControl />
+      <Suspense fallback={null}>
+        <SoundControl />
+      </Suspense>
       <Navbar />
       
       <main className="container" style={{ paddingTop: '100px', paddingBottom: '50px' }}>
@@ -71,56 +139,72 @@ function App() {
             {/* Tech Stack */}
             <div className="col-span-8">
                 <SectionCard theme="violet" delay={0.1}>
-                    <TechStack />
+                    <Suspense fallback={<SectionFallback title="32%" lines={5} compact />}>
+                      <TechStack />
+                    </Suspense>
                 </SectionCard>
             </div>
 
             {/* Timezone */}
             <div className="col-span-4" style={{height: '100%'}}>
                  <SectionCard theme="blue" delay={0.2} style={{height: '100%'}}>
-                    <Timezone />
+                    <Suspense fallback={<SectionFallback title="46%" lines={4} compact />}>
+                      <Timezone />
+                    </Suspense>
                  </SectionCard>
             </div>
 
             {/* What I Offer - New */}
             <div className="col-span-4" style={{height: '100%'}}>
                  <SectionCard theme="orange" delay={0.1} style={{height: '100%'}}>
-                    <WhatIOffer />
+                    <Suspense fallback={<SectionFallback title="38%" lines={4} compact />}>
+                      <WhatIOffer />
+                    </Suspense>
                  </SectionCard>
             </div>
 
             {/* Journey - New */}
             <div className="col-span-8" style={{height: '100%'}}>
                  <SectionCard theme="green" delay={0.2} style={{height: '100%'}}>
-                    <Journey />
+                    <Suspense fallback={<SectionFallback title="36%" lines={5} compact />}>
+                      <Journey />
+                    </Suspense>
                  </SectionCard>
             </div>
 
              {/* Workflow - New */}
              <div className="col-span-12">
                  <SectionCard theme="blue" delay={0.1}>
-                    <Workflow />
+                    <Suspense fallback={<SectionFallback title="34%" lines={4} />}>
+                      <Workflow />
+                    </Suspense>
                  </SectionCard>
             </div>
 
             {/* Experience */}
             <div className="col-span-12">
                 <SectionCard theme="green" id="experience" delay={0.1}>
-                    <Experience />
+                    <Suspense fallback={<SectionFallback title="42%" lines={6} />}>
+                      <Experience />
+                    </Suspense>
                 </SectionCard>
             </div>
 
             {/* Projects */}
             <div className="col-span-12">
                 <SectionCard theme="orange" id="projects" delay={0.1}>
-                    <Projects />
+                    <Suspense fallback={<SectionFallback title="36%" lines={5} />}>
+                      <Projects />
+                    </Suspense>
                 </SectionCard>
             </div>
 
             {/* Connect Globe - Replaces old Contact */}
             <div className="col-span-12">
                 <SectionCard theme="violet" id="contact" delay={0.2}>
-                    <ConnectGlobe />
+                    <Suspense fallback={<SectionFallback title="33%" lines={4} />}>
+                      <ConnectGlobe />
+                    </Suspense>
                 </SectionCard>
             </div>
 

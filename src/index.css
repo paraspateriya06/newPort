@@ -16,6 +16,10 @@
   --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -40,6 +44,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+#root {
+  isolation: isolate;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -56,6 +64,63 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 clamp(1rem, 4vw, 1.5rem);
+}
+
+.app-spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 18%), rgba(255, 255, 255, 0.09), transparent 18%),
+    radial-gradient(circle at calc(var(--pointer-x, 50%) + 12%) calc(var(--pointer-y, 18%) + 18%), rgba(148, 163, 184, 0.05), transparent 24%);
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  transition: background-position 0.18s linear, opacity 0.4s var(--ease-smooth);
+}
+
+.section-fallback {
+  display: grid;
+  gap: 1rem;
+  min-height: 240px;
+  align-content: start;
+}
+
+.section-fallback.compact {
+  min-height: 200px;
+}
+
+.section-fallback-title {
+  height: 1rem;
+  border-radius: 999px;
+}
+
+.section-fallback-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.section-fallback-line {
+  height: 4.4rem;
+  border-radius: 1rem;
+}
+
+.shimmer-block {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
+    rgba(10, 10, 11, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.shimmer-block::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 18%, rgba(255, 255, 255, 0.12) 48%, transparent 78%);
+  transform: translateX(-120%);
+  animation: shimmerSlide 1.8s var(--ease-smooth) infinite;
 }
 
 .section-title {
@@ -182,6 +247,12 @@ button {
   }
 }
 
+@keyframes shimmerSlide {
+  100% {
+    transform: translateX(120%);
+  }
+}
+
 @media (max-width: 700px) {
   body {
     background-size: 42px 42px, 42px 42px, cover, cover;
@@ -209,5 +280,30 @@ button {
 
   .workflow-steps>div:first-child {
     display: none;
+  }
+
+  .app-spotlight {
+    opacity: 0.4;
+  }
+
+  .section-fallback,
+  .section-fallback.compact {
+    min-height: 180px;
+  }
+
+  .section-fallback-line {
+    height: 3.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .app-spotlight,
+  .shimmer-block::after {
+    animation: none;
+    transition: none;
   }
 }

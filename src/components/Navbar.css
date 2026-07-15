@@ -36,6 +36,12 @@
     cursor: pointer;
 }
 
+.logo-button {
+    background: none;
+    border: 0;
+    padding: 0;
+}
+
 .nav-links {
     display: flex;
     gap: 2.5rem;
@@ -55,6 +61,10 @@
     color: var(--text-color);
 }
 
+.nav-link.active {
+    color: var(--text-color);
+}
+
 .nav-link::after {
     content: '';
     position: absolute;
@@ -67,6 +77,10 @@
 }
 
 .nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link.active::after {
     width: 100%;
 }
 
@@ -137,6 +151,10 @@
     }
 
     .mobile-nav-link:hover {
+        color: var(--primary-accent);
+    }
+
+    .mobile-nav-link.active {
         color: var(--primary-accent);
     }
 

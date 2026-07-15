@@ -7,6 +7,7 @@ import './Navbar.css';
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('about');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,13 +17,59 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const sectionIds = ['about', 'experience', 'projects', 'contact'];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visibleEntries[0]?.target?.id) {
+          setActiveSection(visibleEntries[0].target.id);
+        }
+      },
+      {
+        rootMargin: '-30% 0px -45% 0px',
+        threshold: [0.2, 0.45, 0.7],
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   const navItems = [
     { name: 'About', href: '#about' },
     { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleNavClick = (event, href) => {
+    event.preventDefault();
+    const targetId = href.replace('#', '');
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    const offset = 90;
+    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+    setActiveSection(targetId);
+    setIsOpen(false);
+  };
+
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setActiveSection('about');
+    setIsOpen(false);
+  };
 
   return (
     <motion.nav 
@@ -32,13 +79,19 @@ const Navbar = () => {
       className={`navbar ${scrolled ? 'scrolled' : ''}`}
     >
         <div className="container nav-content">
-            <div className="logo">Paras.</div>
+            <button type="button" className="logo logo-button" onClick={handleLogoClick}>Paras.</button>
 
             {/* Desktop Navigation */}
             <ul className="nav-links desktop-only">
                 {navItems.map((item) => (
                     <li key={item.name}>
-                        <a href={item.href} className="nav-link">{item.name}</a>
+                        <a
+                            href={item.href}
+                            className={`nav-link ${activeSection === item.href.slice(1) ? 'active' : ''}`}
+                            onClick={(event) => handleNavClick(event, item.href)}
+                        >
+                            {item.name}
+                        </a>
                     </li>
                 ))}
             </ul>
@@ -55,7 +108,7 @@ const Navbar = () => {
                         <SiLeetcode size={20} />
                     </a>
                 </div>
-                <a href="#contact" className="cta-button">Contact Me</a>
+                <a href="#contact" className="cta-button" onClick={(event) => handleNavClick(event, '#contact')}>Contact Me</a>
             </div>
 
             {/* Mobile Toggle */}
@@ -77,14 +130,15 @@ const Navbar = () => {
                     <ul className="mobile-nav-links">
                         {navItems.map((item) => (
                             <li key={item.name}>
-                                <a href={item.href} className="mobile-nav-link" onClick={() => setIsOpen(false)}>
+                                <a
+                                    href={item.href}
+                                    className={`mobile-nav-link ${activeSection === item.href.slice(1) ? 'active' : ''}`}
+                                    onClick={(event) => handleNavClick(event, item.href)}
+                                >
                                     {item.name}
                                 </a>
                             </li>
                         ))}
-                        <li>
-                             <a href="#contact" className="mobile-nav-link" onClick={() => setIsOpen(false)}>Contact Me</a>
-                        </li>
                     </ul>
                     <div className="mobile-socials">
                         <a href="https://github.com/paraspateriya06" target="_blank" rel="noopener noreferrer"><FaGithub size={24} /></a>
